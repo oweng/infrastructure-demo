@@ -1,0 +1,42 @@
+name: Terraform Deployment
+
+on: 
+  push:
+   branches:
+      - '**' 
+
+jobs:
+  terraform-deploy:
+    name: 'Terraform Deployment'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: hashicorp/setup-terraform@v2.0.2
+      - uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1.7.0
+        with:
+          aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.ACCESS_KEY_SECRET }}
+          aws-region: us-east-1
+
+      - name: Terraform Init
+        id: init
+        run: terraform init -backend-config=demo.config.tfbackend
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate
+
+      - name: Terraform plan
+        id: plan
+        run: terraform plan -no-color -input=false -var-file='demo.tfvars'
+
+      - name: Terraform Plan Status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
+
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply -auto-approve -input=false -var-file='demo.tfvars'
