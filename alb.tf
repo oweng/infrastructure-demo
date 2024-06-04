@@ -2,9 +2,10 @@ module "alb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "9.9.0"
 
-  name    = "public-alb"
-  vpc_id  = module.vpc.vpc_id
-  subnets = module.vpc.public_subnets
+  name                       = "public-alb"
+  vpc_id                     = module.vpc.vpc_id
+  subnets                    = module.vpc.public_subnets
+  enable_deletion_protection = false
 
   # Security Group
   security_group_ingress_rules = {
