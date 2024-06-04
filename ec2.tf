@@ -70,7 +70,7 @@ module "asg" {
 ## the time
 
 data "aws_instances" "demo" {
-  depends_on = module.asg.launch_template_id
+  depends_on = module.asg
   instance_tags = {
     Name = "demo-web"
   }
