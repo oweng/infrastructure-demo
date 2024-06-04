@@ -70,10 +70,10 @@ module "asg" {
 ## the time
 
 data "aws_instances" "demo" {
-  depends_on = module.asg
   instance_tags = {
     Name = "demo-web"
   }
-
   instance_state_names = ["running"]
+
+  depends_on = [module.asg]
 }
