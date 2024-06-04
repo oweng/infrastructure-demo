@@ -1,0 +1,13 @@
+environment            = "demo"
+tag_environment        = "dev"
+vpc_name               = "infra-demo-vpc"
+vpc_cidr               = "10.0.0.0/16"
+vpc_azs                = ["us-east-1a", "us-east-1b"]
+vpc_private_subnets    = ["10.0.0.0/24", "10.0.1.0/24"]
+vpc_public_subnets     = ["10.0.3.0/24", "10.0.4.0/24"]
+vpc_enable_nat_gateway = true
+vpc_enable_vpn_gateway = false
+vpc_reuse_nat_ips      = true
+nat_node_count         = 3
+vpc_dnsnames           = true
+vpc_dnssupport         = "true"
